@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Iced1">
+        <item>Thai Tea</item>
+        <item>Ice Caramel Macchiato</item>
+        <item>Boba Mocha Coffee</item>
+        <item>Boba Coffee</item>
+        <item>Milk Tea</item>
+    </string-array>
+
+    <string-array name="Hot3">
+        <item>Chai Latte</item>
+        <item>Almond Latte</item>
+        <item>Taro Latte</item>
+        <item>Green Tea Latte</item>
+    </string-array>
+
+    <string-array name="Hot2">
+        <item>Hazelnut Latte</item>
+        <item>Cafe Mocha</item>
+        <item>Vanilla Latte</item>
+        <item>Caramel Macchiato</item>
+        <item>White Cafe Mocha</item>
+    </string-array>
+
+    <string-array name="Hot1">
+        <item>Cafe Latte</item>
+        <item>Cappuccino</item>
+        <item>Hot Coco</item>
+    </string-array>
+
+
+    <string-array name="FlavorMilkTea">
+        <item>Taro</item>
+        <item>Almond</item>
+        <item>Coconut</item>
+        <item>Chai</item>
+        <item>Green Tea</item>
+    </string-array>
+
+    <string-array name="Etc">
+    </string-array>
+
+    <string-array name="Traditional">
+        <item>Jujube</item>
+        <item>Citron</item>
+        <item>Job&apos;s Tears</item>
+        <item>Ginger</item>
+        <item>Assorted Herbs</item>
+    </string-array>
+
+    <string-array name="Hot0">
+        <item>Chai Tea</item>
+        <item>Jasmine Tea</item>
+        <item>Green Tea</item>
+        <item>Americano</item>
+        <item>Coffee</item>
+    </string-array>
+
+    <string-array name="Iced0">
+        <item>Ice Black Tea</item>
+        <item>Ice Green Tea</item>
+        <item>Ice Americano</item>
+    </string-array>
+
+    <string-array name="Frappes">
+        <item>Coffee Frappe</item>
+        <item>Vanilla Frappe</item>
+        <item>Caramel Frappe</item>
+        <item>Mocha Frappe</item>
+    </string-array>
+
+    <string-array name="FruitTea">
+        <item>Strawberry</item>
+        <item>Peach</item>
+        <item>Mango</item>
+        <item>Lychee</item>
+        <item>Passion Fruit</item>
+        <item>Pineapple</item>
+        <item>Green Apple</item>
+    </string-array>
+
+    <string-array name="Slushies">
+        <item>Strawberry</item>
+        <item>Peach</item>
+        <item>Mango</item>
+        <item>Lychee</item>
+        <item>Kiwi</item>
+        <item>Green Apple</item>
+        <item>Passion Fruit</item>
+        <item>Watermelon</item>
+        <item>Pineapple</item>
+        <item>Lemonade</item>
+    </string-array>
+
+    <string-array name="Smoothies">
+        <item>Mixed Grain</item>
+        <item>Peanut Butter</item>
+        <item>Mint Chocolate Chip</item>
+        <item>Coconut</item>
+        <item>Chai</item>
+        <item>Oreo</item>
+        <item>Lemonade</item>
+        <item>Almond</item>
+        <item>Kiwi</item>
+        <item>Red Bean</item>
+        <item>Yogurt</item>
+        <item>Honeydew Melon</item>
+        <item>Pineapple</item>
+        <item>Pistachio</item>
+        <item>Passion Fruit</item>
+        <item>Green Apple</item>
+        <item>Green Tea</item>
+        <item>Lychee</item>
+        <item>Mango</item>
+        <item>Banana</item>
+        <item>Taro</item>
+        <item>Kiwi</item>
+        <item>Raspberry</item>
+        <item>Peach</item>
+        <item>Strawberry</item>
+    </string-array>
+
+</resources>

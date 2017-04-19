@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hazel">
+        <item>Hazelnut Latte</item>
+    </string-array>
+    
+    <string-array name="citron">
+        <item>Citron</item>
+    </string-array>
+
+    <string-array name="seng">
+        <item>Assorted Herbs</item>
+    </string-array>
+
+    <string-array name="ginger">
+        <item>Ginger</item>
+    </string-array>
+
+    <string-array name="jobs">
+        <item>Job&apos;s Tears</item>
+    </string-array>
+
+    <string-array name="juju">
+        <item>Jujube</item>
+    </string-array>
+
+    <string-array name="coco">
+        <item>Hot Coco</item>
+    </string-array>
+
+    <string-array name="cap">
+        <item>Cappuccino</item>
+    </string-array>
+
+    <string-array name="greentea">
+        <item>Jasmine Tea</item>
+        <item>Ice Green Tea</item>
+    </string-array>
+
+    <string-array name="peach">
+        <item>Peach</item>
+    </string-array>
+
+    <string-array name="yogurt">
+        <item>Yogurt</item>
+    </string-array>
+
+    <string-array name="almond">
+        <item>Almond Latte</item>
+        <item>Almond</item>
+    </string-array>
+
+    <string-array name="kiwi">
+        <item>Kiwi</item>
+    </string-array>
+
+    <string-array name="peanutbutter">
+        <item>Peanut Butter</item>
+    </string-array>
+
+    <string-array name="americano">
+        <item>Ice Americano</item>
+        <item>Americano</item>
+    </string-array>
+
+    <string-array name="lemonade">
+        <item>Lemonade</item>
+    </string-array>
+
+    <string-array name="pineapple">
+        <item>Pineapple</item>
+    </string-array>
+
+    <string-array name="banana">
+        <item>Banana</item>
+    </string-array>
+
+    <string-array name="lychee">
+        <item>Lychee</item>
+    </string-array>
+
+    <string-array name="pistachio">
+        <item>Pistachio</item>
+    </string-array>
+
+    <string-array name="blacktea">
+        <item>Ice Black Tea</item>
+    </string-array>
+
+    <string-array name="mango">
+        <item>Mango</item>
+    </string-array>
+
+    <string-array name="raspberry">
+        <item>Raspberry</item>
+    </string-array>
+
+    <string-array name="cafelatte">
+        <item>Cafe Latte</item>
+    </string-array>
+
+    <string-array name="matcha">
+        <item>Green Tea Latte</item>
+        <item>Green Tea</item>
+    </string-array>
+
+    <string-array name="redbean">
+        <item>Red Bean</item>
+    </string-array>
+
+    <string-array name="cafemocha">
+        <item>Boba Mocha Coffee</item>
+        <item>Cafe Mocha</item>
+    </string-array>
+
+    <string-array name="melon">
+        <item>Honeydew Melon</item>
+    </string-array>
+
+    <string-array name="strawberry">
+        <item>Strawberry</item>
+    </string-array>
+
+    <string-array name="caramel">
+        <item>Caramel Frappe</item>
+    </string-array>
+
+    <string-array name="milktea">
+        <item>Milk Tea</item>
+    </string-array>
+
+    <string-array name="taro">
+        <item>Taro Latte</item>
+        <item>Taro</item>
+    </string-array>
+
+    <string-array name="caramelmacchiato">
+        <item>Caramel Macchiato</item>
+        <item>Ice Caramel Macchiato</item>
+    </string-array>
+
+    <string-array name="mintchocolatechip">
+        <item>Mint Chocolate Chip</item>
+    </string-array>
+
+    <string-array name="thaitea">
+        <item>Thai Tea</item>
+    </string-array>
+
+    <string-array name="chai">
+        <item>Chai Tea</item>
+        <item>Chai Latte</item>
+        <item>Chai</item>
+    </string-array>
+
+    <string-array name="mixedgrain">
+        <item>Mixed Grain</item>
+    </string-array>
+
+    <string-array name="vanilla">
+        <item>Vanilla Latte</item>
+        <item>Vanilla Frappe</item>
+    </string-array>
+
+    <string-array name="coconut">
+        <item>Coconut</item>
+    </string-array>
+
+    <string-array name="mocha">
+        <item>Mocha Coffee</item>
+        <item>Mocha Frappe</item>
+    </string-array>
+
+    <string-array name="watermelon">
+        <item>Watermelon</item>
+    </string-array>
+
+    <string-array name="coffee">
+        <item>Coffee</item>
+        <item>Coffee Frappe</item>
+        <item>Boba Coffee</item>
+    </string-array>
+
+    <string-array name="oreo">
+        <item>Oreo</item>
+    </string-array>
+
+    <string-array name="whitecafemocha">
+        <item>White Cafe Mocha</item>
+    </string-array>
+
+    <string-array name="greenapple">
+        <item>Green Apple</item>
+    </string-array>
+
+    <string-array name="passionfruit">
+        <item>Passion Fruit</item>
+    </string-array>
+
+</resources>
