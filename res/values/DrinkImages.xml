@@ -17,7 +17,7 @@
     </string-array>
 
     <string-array name="jobs">
-        <item>Job&apos;s Tears</item>
+        <item>Jobs Tears</item>
     </string-array>
 
     <string-array name="juju">
@@ -197,4 +197,52 @@
         <item>Passion Fruit</item>
     </string-array>
 
+    <array name="images">
+        <item>@array/almond</item>
+        <item>@array/americano</item>
+        <item>@array/banana</item>
+        <item>@array/blacktea</item>
+        <item>@array/cafelatte</item>
+        <item>@array/cafemocha</item>
+        <item>@array/cap</item>
+        <item>@array/caramel</item>
+        <item>@array/caramelmacchiato</item>
+        <item>@array/chai</item>
+        <item>@array/citron</item>
+        <item>@array/coco</item>
+        <item>@array/coconut</item>
+        <item>@array/coffee</item>
+        <item>@array/ginger</item>
+        <item>@array/greenapple</item>
+        <item>@array/greentea</item>
+        <item>@array/hazel</item>
+        <item>@array/jobs</item>
+        <item>@array/juju</item>
+        <item>@array/kiwi</item>
+        <item>@array/lemonade</item>
+        <item>@array/lychee</item>
+        <item>@array/mango</item>
+        <item>@array/matcha</item>
+        <item>@array/melon</item>
+        <item>@array/milktea</item>
+        <item>@array/mintchocolatechip</item>
+        <item>@array/mixedgrain</item>
+        <item>@array/mocha</item>
+        <item>@array/oreo</item>
+        <item>@array/passionfruit</item>
+        <item>@array/peach</item>
+        <item>@array/peanutbutter</item>
+        <item>@array/pineapple</item>
+        <item>@array/pistachio</item>
+        <item>@array/raspberry</item>
+        <item>@array/redbean</item>
+        <item>@array/seng</item>
+        <item>@array/strawberry</item>
+        <item>@array/taro</item>
+        <item>@array/thaitea</item>
+        <item>@array/vanilla</item>
+        <item>@array/watermelon</item>
+        <item>@array/whitecafemocha</item>
+        <item>@array/yogurt</item>
+    </array>
 </resources>
