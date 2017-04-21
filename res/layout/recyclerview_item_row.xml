@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+    >
 
   <ImageView
       android:id="@+id/item_image"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_centerHorizontal="true"
       android:layout_gravity="center"
       android:layout_marginTop="8dp"
       android:layout_weight="3"
       android:adjustViewBounds="true"/>
+
   <TextView
       android:id="@+id/item_date"
       android:layout_width="wrap_content"
@@ -19,7 +22,9 @@
       android:layout_gravity="top|start"
       android:layout_marginTop="8dp"
       android:layout_weight="1"
-      android:text="Some date"/>
+      android:text="Some date"
+      android:layout_alignBottom="@id/item_image"
+      android:layout_alignRight="@id/item_image"/>
   <TextView
       android:id="@+id/item_description"
       android:layout_width="wrap_content"
@@ -27,5 +32,12 @@
       android:layout_gravity="center|start"
       android:layout_weight="1"
       android:ellipsize="end"
-      android:maxLines="5"/>
-</LinearLayout>
+      android:maxLines="5"
+      android:textSize="30dp"
+      android:shadowColor="@color/colorPrimaryDark"
+      android:shadowDx="1.5"
+      android:shadowDy="1.3"
+      android:shadowRadius="1.6"
+      />
+
+</RelativeLayout>
