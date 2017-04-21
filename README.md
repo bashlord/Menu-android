@@ -1,5 +1,7 @@
 # Menu-android
 Android impementation of the Menu
+- Uses Glide for image cacheing(Menu images)
+- RecyclerView with StaggeredGridAdapter
 ---------------------------------
 Update as of April 21, 2017
 https://www.youtube.com/watch?v=hdSN1oFRiSw
