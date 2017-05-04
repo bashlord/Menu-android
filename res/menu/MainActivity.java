@@ -8,17 +8,19 @@ import android.support.constraint.ConstraintSet;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.jjkbashlord.menu.Adapters.RecyclerAdapter;
 import com.jjkbashlord.menu.Animations.ResizeAnimation;
 import com.jjkbashlord.menu.CustomViews.CustomImageButton;
+import com.jjkbashlord.menu.CustomViews.CustomRecyclerView;
 import com.jjkbashlord.menu.CustomViews.OutlinedTextView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,23 +36,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     CustomImageButton bLeft, bRight;
     float width, height, dpHeight;
-    int textViewPagerWidth, textViewFlag;
+    int textViewPagerWidth, textViewFlag, recyclerViewFlag;
 
     ConstraintLayout constraintLayout;
-    private ConstraintLayout.LayoutParams rightLayoutParam, leftLayoutParam;
+    private ConstraintLayout.LayoutParams rightLayoutParam, leftLayoutParam, parentBottomLayoutParam;
     private ConstraintSet applyConstraintSet = new ConstraintSet();
     private ConstraintSet resetConstraintSet = new ConstraintSet();
 
-    private RecyclerView recyclerView;
-    private RecyclerAdapter adapter;
-
-    private GridLayoutManager gridLayoutManager;
-    private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private CustomRecyclerView recyclerView0, recyclerView1;
+    private RecyclerAdapter adapter0, adapter1;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager0,staggeredGridLayoutManager1;
 
     public ArrayList<ArrayList<BobaDrink>> drinks;
     Map<String,Integer> imageToId =  new HashMap<String,Integer>();
     Map<String,Integer> drinkToImg =  new HashMap<String,Integer>();
     public int currPage;
+    public int numOfPages = 5;
+
+    ConstraintLayout.LayoutParams lp0,lp1;
+
+    Animation in_left;
+    Animation in_right;
+
+    Animation out_left;
+    Animation out_right;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // if textViewFlag == 0, currently used textview is 0
         //   and 1 needs to be used for the transition animation
-        currPage = textViewFlag = 0;
+        currPage = textViewFlag = recyclerViewFlag= 0;
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -89,25 +99,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tf0 = Typeface.createFromAsset(getAssets(), fontPath_Helve);
         tf1 = Typeface.createFromAsset(getAssets(), fontPath_HelveNueve);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,1);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView0 = (CustomRecyclerView) findViewById(R.id.recyclerView);
+        recyclerView1 = (CustomRecyclerView) findViewById(R.id.recyclerView1);
 
         drinks = new ArrayList<ArrayList<BobaDrink>>();
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i <= numOfPages+1; i++)
             drinks.add(new ArrayList<BobaDrink>());
 
         setImageIds();
         initPhotos();
-        adapter = new RecyclerAdapter(drinks, tf1,this);
-        recyclerView.setAdapter(adapter);
+
+        // Evens
+        staggeredGridLayoutManager0 = new StaggeredGridLayoutManager(2,1);
+        staggeredGridLayoutManager0.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView0.setLayoutManager(staggeredGridLayoutManager0);
+        adapter0 = new RecyclerAdapter(drinks, tf1,this,0);
+        recyclerView0.setAdapter(adapter0);
+        // Odds
+        staggeredGridLayoutManager1 = new StaggeredGridLayoutManager(2,1);
+        staggeredGridLayoutManager1.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+
+        recyclerView1.setLayoutManager(staggeredGridLayoutManager1);
+        adapter1 = new RecyclerAdapter(drinks, tf1,this,1);
+        recyclerView1.setAdapter(adapter1);
 
         textView0.setText( Constants.titles.get(currPage) );
         topTextView.setTextSize(50);
 
         rightLayoutParam = (ConstraintLayout.LayoutParams) bRight.getLayoutParams();
         leftLayoutParam = (ConstraintLayout.LayoutParams) bLeft.getLayoutParams();
+
+        in_left = AnimationUtils.loadAnimation(this, R.anim.in_left);
+        in_right = AnimationUtils.loadAnimation(this, R.anim.in_right);
+
+        out_left = AnimationUtils.loadAnimation(this, R.anim.out_left);
+        out_right = AnimationUtils.loadAnimation(this, R.anim.out_right);
+
+        lp0 = (ConstraintLayout.LayoutParams) recyclerView0.getLayoutParams();
+        lp1 = (ConstraintLayout.LayoutParams) recyclerView1.getLayoutParams();
+
     }
 
     @Override
@@ -115,19 +145,120 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int temp = -1;
         switch (view.getId()){
             case R.id.leftButton:
-                temp = adapter.pageLeft();
+                //temp = adapter0.pageLeft();
+                //adapter1.pageLeft();
+                if( (currPage%2) == 0 )
+                    temp = adapter1.pageLeft();
+                else
+                    temp = adapter0.pageLeft();
                 if(currPage != temp){
+                    bLeft.setClickable(false);
+                    if( (currPage%2) == 0 ){
+                        ConstraintSet constraintSet = new ConstraintSet();
+                        constraintSet.clone(constraintLayout);
+                        constraintSet.connect(R.id.recyclerView1, ConstraintSet.BOTTOM, R.id.activity_main, ConstraintSet.BOTTOM, 0);
+                        constraintSet.applyTo(constraintLayout);
+                        adapter1.notifyDataSetChanged();
+                        recyclerView1.startAnimation(in_right);
+
+                        recyclerView0.startAnimation(out_right);
+                        recyclerView0.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //adapter0.notifyDataSetChanged();
+                                //lp0.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+                                //recyclerView0.setLayoutParams(lp0);
+                                adapter0.pageLeft();
+                                adapter0.notifyDataSetChanged();
+                                bLeft.setClickable(true);
+                            }
+                        },600);
+
+
+                    }else{
+                        ConstraintSet constraintSet = new ConstraintSet();
+                        constraintSet.clone(constraintLayout);
+                        constraintSet.connect(R.id.recyclerView, ConstraintSet.BOTTOM, R.id.activity_main, ConstraintSet.BOTTOM, 0);
+                        constraintSet.applyTo(constraintLayout);
+                        adapter0.notifyDataSetChanged();
+                        recyclerView0.startAnimation(in_right);
+
+                        recyclerView1.startAnimation(out_right);
+                        recyclerView1.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //adapter1.notifyDataSetChanged();
+                                //lp1.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+                                //recyclerView1.setLayoutParams(lp1);
+                                adapter1.pageLeft();
+                                adapter1.notifyDataSetChanged();
+                                bLeft.setClickable(true);
+                            }
+                        },600);
+
+
+                    }
                     currPage = temp;
-                    adapter.notifyDataSetChanged();
+                    //adapter0.notifyDataSetChanged();
+                    //adapter1.notifyDataSetChanged();
                     pageLabel(0);
+
                 }
                 break;
             case R.id.rightButton:
-                temp = adapter.pageRight();
+                if( (currPage%2) == 0 )
+                    temp = adapter1.pageRight();
+                else
+                    temp = adapter0.pageRight();
                 if(temp != currPage){
+                    bRight.setClickable(false);
+                    if( (currPage%2) == 0 ){
+                        ConstraintSet constraintSet = new ConstraintSet();
+                        constraintSet.clone(constraintLayout);
+                        constraintSet.connect(R.id.recyclerView1, ConstraintSet.BOTTOM, R.id.activity_main, ConstraintSet.BOTTOM, 0);
+                        constraintSet.applyTo(constraintLayout);
+                        adapter1.notifyDataSetChanged();
+                        recyclerView1.startAnimation(in_left);
+
+                        recyclerView0.startAnimation(out_left);
+                        recyclerView0.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //adapter0.notifyDataSetChanged();
+                                //lp0.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+                                //recyclerView0.setLayoutParams(lp0);
+                                adapter0.pageRight();
+                                adapter0.notifyDataSetChanged();
+                                bRight.setClickable(true);
+                            }
+                        },600);
+                    }else{
+                        ConstraintSet constraintSet = new ConstraintSet();
+                        constraintSet.clone(constraintLayout);
+                        constraintSet.connect(R.id.recyclerView, ConstraintSet.BOTTOM, R.id.activity_main, ConstraintSet.BOTTOM, 0);
+                        constraintSet.applyTo(constraintLayout);
+                        adapter0.notifyDataSetChanged();
+                        recyclerView0.startAnimation(in_left);
+
+                        recyclerView1.startAnimation(out_left);
+                        recyclerView1.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //adapter1.notifyDataSetChanged();
+                                //lp1.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+                                //recyclerView1.setLayoutParams(lp1);
+                                adapter1.pageRight();
+                                adapter1.notifyDataSetChanged();
+                                bRight.setClickable(true);
+                            }
+                        },600);
+                    }
+
                     currPage = temp;
-                    adapter.notifyDataSetChanged();
+                    //adapter1.notifyDataSetChanged();
+                    //adapter0.notifyDataSetChanged();
                     pageLabel(1);
+
                 }
                 break;
         }
@@ -267,6 +398,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for(String str: hot3){
             drinks.get(4).add(new BobaDrink(str, small,med, drinkToImg.get(str) ));
         }
+
+        //for(ArrayList<BobaDrink> list: drinks){
+        //    Log.d("JJK", "Drink count: "+String(list.size()));
+        //}
     }
 
     public void setImageIds(){
@@ -275,21 +410,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // mapping url, which is the .jpg filenames, to the resource int id
         for(String url: Constants.drinkImgUrls ) {
             int id = context.getResources().getIdentifier(url, "drawable", context.getPackageName());
+            //Log.d("JJK", "pathname/id: "+ url+"/"+String(id));
+            //Drawable draw = context.getResources().getDrawable(id,null);
+            //Bitmap anImage = scaleBitmap(((BitmapDrawable) draw).getBitmap());
             imageToId.put(url,id);
+            //drinkToBits.put(url,anImage);
             index++;
         }
+        //Log.d("JJK", "photo ids: " + String(imageToId.size()));
+
         // mapping the drinks to their categories
         String categoryName = "";
-        TypedArray images = context.getResources().obtainTypedArray(R.array.images);
+        TypedArray images = context.getResources().obtainTypedArray(R.array.images);  ///R.array.images
         int n = images.length();
         for (int i = 0; i < n; ++i) {
             int id = images.getResourceId(i, 0);
+            //String name = images.getRe
             if (id > 0) {
+                // String extensionRemoved = filename.split("\\.")[0];
                 String[] arr = context.getResources().getStringArray(id);
                 categoryName = (context.getResources().getResourceName(id)).split("/")[1];
+                //Log.d("JJK", String(id)+" "+ String(arr.length)+" "+categoryName );
                 for(String s: arr){
+                    //Log.d("JJK",s+" "+ imageToId.get(categoryName).toString());
                     drinkToImg.put(s, imageToId.get(categoryName) );
                 }
+            } else {
+                // something wrong with the XML
+                Log.d("JJK", "fail");
             }
         }
         images.recycle();
@@ -299,11 +447,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ///////////////  pager left<->right    //////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
     public void pageLabel(final int flag){
+        //Log.d("JJK","  flag == 0: pageLeft clicked");
+        //Log.d("JJK","  flag == 1: pageRight clicked");
+        Log.d("JJK","===========================================");
+
         // flag == 0 paging from the left
         // flag == 1 paging from the right
+        if(flag == 0)
+            Log.d("JJK","\n   pageLabel(int flag: "+String(flag) +") called");
+        else
+            Log.d("JJK","\n   pageLabel(int flag: "+String(flag) +") called");
+
+        if(textViewFlag == 0) {
+            Log.d("JJK", "  textViewFlag == " + String(textViewFlag) +
+                    ":\n current: textView0, incoming: textView1");
+        }else {
+            Log.d("JJK", "  textViewFlag == " + String(textViewFlag) +
+                    ":\n current: textView1, incoming: textView0");
+        }
 
         if(textViewFlag == 0){
+            Log.d("JJK","if Here");
             if(flag == 0) {//  page left ->>>>>
+                Log.d("JJK","page left 0");
                 unbindConstraint(0);
 
                 ConstraintSet constraintSet = new ConstraintSet();
@@ -315,6 +481,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 constraintSet.connect(R.id.textView0, ConstraintSet.RIGHT, R.id.rightButton, ConstraintSet.LEFT, 0);
                 constraintSet.applyTo(constraintLayout);
             }else {// page from rightside <<<----
+                Log.d("JJK","page right 0");
                 unbindConstraint(1);
 
                 ConstraintSet constraintSet = new ConstraintSet();
@@ -328,6 +495,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 constraintSet.applyTo(constraintLayout);
             }
 
+            //Log.d("JJK","pre animtion");
             ViewGroup.LayoutParams lp = textView0.getLayoutParams();
             ResizeAnimation a = new ResizeAnimation(textView0);
             a.setDuration(500);
@@ -352,7 +520,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             textView1.setText(Constants.titles.get(currPage));
             textViewFlag = 1;
         }else{
+            Log.d("JJK","else There");
             if(flag == 0) {//  page left
+                Log.d("JJK","page left 1");
                 unbindConstraint(0);
                 ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(constraintLayout);
@@ -364,6 +534,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 constraintSet.connect(R.id.textView1, ConstraintSet.RIGHT, R.id.rightButton, ConstraintSet.LEFT, 0);
                 constraintSet.applyTo(constraintLayout);
             }else {// page from rightside
+                Log.d("JJK","page right 1");
 
                 unbindConstraint(1);
                 ConstraintSet constraintSet = new ConstraintSet();
@@ -380,6 +551,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ViewGroup.LayoutParams lp = textView1.getLayoutParams();
             ResizeAnimation a = new ResizeAnimation(textView1);
             a.setDuration(500);
+            Log.d("JJK", "textview1 width: "+String(lp.width));
             a.setParams(lp.width,0);
             textView1.startAnimation(a);
             textView1.postDelayed(new Runnable() {
@@ -402,6 +574,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             textView0.setText(Constants.titles.get(currPage));
             textViewFlag = 0;
         }
+        Log.d("JJK","   pageLabel(int flag: "+String(flag) +") finished\n");
+        Log.d("JJK","------------------------------------------------");
+
     }
 
     public void unbindConstraint(int flag0){
